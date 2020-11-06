@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "nodemon src/index.dev.ts",
-    "publish": "npm run build & npm publish"
+    "myPublish": "npm run build & npm publish"
   },
   "files": [
     "dist"
