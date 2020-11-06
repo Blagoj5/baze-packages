@@ -1,6 +1,6 @@
-> **Middleware** for advanced quering GET request via URL queries and parametars. **It only works with mongoDB (mongoose) and expressjs**. It also provides **pagination**
+**Middleware** for advanced quering GET request via URL queries and parametars. **It only works with mongoDB (mongoose) and expressjs**. It also provides **pagination**
 
-# Why use this middleware?
+## Why use this middleware?
 
 **Benefits:**
 
@@ -9,11 +9,13 @@
 3. Special operators like ?all and ?q that provide global advanced query/search trough all fields in a mongoose model without worrying about what type is the field(Mongoose String, Mongoose ObjectId) or the query value(number, string, date)
 4. Included Pagination
 
-# Install
+## Install
 
-> \$ npm install advanced-results
+```
+$ npm install advanced-results
+```
 
-# Usage
+## Usage
 
 **ES6 syntax**:
 
@@ -27,7 +29,7 @@ import advancedResults from 'advanced-results'
 const advancedResults = require('advanced-results');
 ```
 
-## Basic usage
+### Basic usage
 
 Advanced-results middleware is very easy to implement you just use it in the route right before your main controller/middleware:
 Ex.
@@ -52,7 +54,7 @@ router.get('/posts', advancedResults(Model), (req, res) => {
 });
 ```
 
-## How it works
+### How it works
 
 This middleware works **thanks to the express request object** and uses req.query and req.params.
 
@@ -209,9 +211,9 @@ model.find({ '$or': [ { randomNum: 42 }, { __v: 42 } ] })
 
 **?filter** is more complicated query parametar and requires more parsing before it's sent to the backend. I intially created this option because of **react-admin** package. You can find more example on how to use this [HERE](./MoreDocsAndExamples)
 
-## Advance Usage
+### Advance Usage
 
-### Additional parametars
+#### Additional parametars
 
 advancedResults except model as first parametar it takes 3 more arguments
 
@@ -227,15 +229,15 @@ advancedResults except model as first parametar it takes 3 more arguments
 4. The fourth argument is of type boolean and is only used for deciding whenever the middleware should console log what the final results of res.advancedResults will look like and what will be passed to model.find(). Default is: **fasle**  
    **advancedResults(Post, null, null, true)**
 
-# Documentation
+## Documentation
 
 In this section i will mention most of the options you can pass to the URL that will work with this middleware
 
-## Options
+### Options
 
 **Check MongoDB** documentation about querying, operators and options in order to understand more about using this middleware. Here's some basic options explained:
 
-### Field Specific Operators
+#### Field Specific Operators
 
 1. Operators that you can pass to the url without **\$** sing:
    - **in** (by default uses in-case sensitive options, ex. ?field[in]=value1,value2)
@@ -248,7 +250,7 @@ In this section i will mention most of the options you can pass to the URL that 
    - **eq** (example.com?field[eq]=5)
 2. Other operatorswork but you need to pass $ for example if you want to pass operator $ne. You need to do example.com?field[$ne]=value. All operators HERE: https://docs.mongodb.com/manual/reference/operator/
 
-### Query operations
+#### Query operations
 
 **Special operations** that can be done via url:
 
@@ -264,7 +266,7 @@ In this section i will mention most of the options you can pass to the URL that 
 
 - filter (more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](./MoreDocsAndExamples))
 
-### Result: res.advancedResults explained in Details
+#### Result: res.advancedResults explained in Details
 
 Usually **res.advancedResults** is provided in the next form:
 
@@ -312,14 +314,14 @@ res.advancedResults = {
 - **pagination.maxDocuments** - the maximum number of documents without the QUERY. **So this the total number of document from that model**
 - **data** - The result of model.find(), a **list** of all documents that match the specific query criteria. If none it is empty
 
-### Additional explanation about ?all or ?q
+#### Additional explanation about ?all or ?q
 
 If you have ?all=word1+word2 it does query for every field for word1 + for word2 + both words "word1 word2" and merges them together into a single object which is then passed to model.find()
 
-### What to do if you still don't understand how it works?
+#### What to do if you still don't understand how it works?
 
 I would encourage you to install this middleware and enable the console log option which is the **fourth argument** and see what it returns and what will be taken into consideration when querying.
 
-## Error handling
+### Error handling
 
 If this middleware throws error it will automatically call next(new Error) which will then go to your error middleware handler. Check expressjs error handling page where it teaches you how to define error middleware to handle all types of error and return them into the res object back to the client
