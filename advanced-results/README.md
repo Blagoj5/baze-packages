@@ -1,4 +1,4 @@
-**Middleware** for advanced quering GET request via URL queries and parametars. **It only works with mongoDB (mongoose) and expressjs**. It also provides **pagination**
+**Middleware** used for advanced querying Mongoose Documents for a specific Model trough GET request using the queries and parametars prvoided by the url . **It only works with MongoDB (mongoose) and expressjs**. It also provides **pagination**
 
 ## Why use this middleware?
 
