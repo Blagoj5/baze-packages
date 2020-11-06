@@ -12,7 +12,7 @@
 ## Install
 
 ```
-$ npm install advanced-results
+$ npm install advanced-results@latest
 ```
 
 ## Usage

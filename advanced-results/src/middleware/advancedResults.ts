@@ -79,7 +79,15 @@ const advancedResults = (
       const reqQuery = { ...req.query };
 
       //   Fields to exclude
-      const removeField = ['select', 'sort', 'limit', 'page', 'all', 'filter'];
+      const removeField = [
+        'select',
+        'sort',
+        'limit',
+        'page',
+        'all',
+        'filter',
+        'q',
+      ];
 
       //   Loop over removeField and delete from reqQuery
       removeField.forEach((param) => delete reqQuery[param]);
@@ -163,7 +171,7 @@ const advancedResults = (
         }
         // In case query is q=Sth+sth
         if (req.query.q) {
-          words = words.concat((req.query.all as string).split(' '));
+          words = words.concat((req.query.q as string).split(' '));
           wordsString = wordsString + req.query.q;
         }
 
@@ -292,4 +300,4 @@ const advancedResults = (
   );
 };
 
-export default advancedResults;
+export = advancedResults;
