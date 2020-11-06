@@ -1,8 +1,9 @@
 {
   "name": "advanced-results0middleware",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Advanced query middleware for expressjs and mongoose",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "dev": "nodemon src/index.dev.ts"
@@ -10,6 +11,14 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blagoj5/baze-packages/tree/main/advanced-results"
+  },
+  "bugs": {
+    "url": "https://github.com/Blagoj5/baze-packages/issues"
+  },
+  "homepage": "https://github.com/Blagoj5/baze-packages/tree/main/advanced-results#readme",
   "author": "Blagoj Petrov",
   "license": "MIT",
   "devDependencies": {
@@ -23,6 +32,14 @@
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   },
+  "keywords": [
+    "expressjs",
+    "backend",
+    "middleware",
+    "query",
+    "query-helper",
+    "mongoose"
+  ],
   "peerDependencies": {
     "express": ">=4",
     "mongoose": "5.x"
