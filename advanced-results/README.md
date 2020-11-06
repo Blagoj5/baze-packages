@@ -235,36 +235,39 @@ In this section i will mention most of the options you can pass to the URL that 
 
 ### Options
 
-**Check MongoDB** documentation about querying, operators and options in order to understand more about using this middleware. Here's some basic options explained:
+[**Check MongoDB**](https://docs.mongodb.com/manual/reference/operator/) documentation about querying, operators and options in order to understand more about this middleware. Here's basic explanation for some of the options :
 
 #### Field Specific Operators
 
 1. Operators that you can pass to the url without **\$** sing:
-   - **in** (by default uses in-case sensitive options, ex. ?field[in]=value1,value2)
-   - **regex** (by d`efault uses in-case sensitive options, ex. ?field[regex]=sth)
-   - **options** (this goes with regex by default is case-insensitivite ex. ?field[regex]=val&field[options]=i)
-   - **gt** (example.com?field[gt]=5)
-   - **gte** (example.com?field[gte]=5)
-   - **lt** (example.com?field[lt]=5)
-   - **lte** (example.com?field[lte]=5)
-   - **eq** (example.com?field[eq]=5)
-2. Other operatorswork but you need to pass $ for example if you want to pass operator $ne. You need to do example.com?field[$ne]=value. All operators HERE: https://docs.mongodb.com/manual/reference/operator/
+
+| Operator    | Description                                                                                                                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **in**      | selects the documents where the value of a field equals any value in the specified array , ex. ?field[in]=value1,value2                                                                  |
+| **regex**   | provides regular expression capabilities for pattern matching strings in queries. By default is in-case sensitive but can be changed with the \$options operator, ex. ?field[regex]=sth) |
+| **options** | this only works with regex. By default is case-insensitivite ex. ?field[regex]=val&field[options]=i                                                                                      |
+| **gt**      | example.com?field[gt]=5                                                                                                                                                                  |
+| **gte**     | example.com?field[gte]=5                                                                                                                                                                 |
+| **lt**      | example.com?field[lt]=5                                                                                                                                                                  |
+| **lte**     | example.com?field[lte]=5                                                                                                                                                                 |
+| **eq**      | example.com?field[eq]=5                                                                                                                                                                  |
+
+<br />
+
+2. Other operators work however you need to pass $ for example if you want to pass operator $ne. You need to do example.com?field[$ne]=value. All operators HERE: https://docs.mongodb.com/manual/reference/operator/
 
 #### Query operations
 
-**Special operations** that can be done via url:
+Special operations that can be done via url:
 
-- select (example.com?select=field or multiple example.com?select=field1,field2)
-
-- sort (Default field: createdAt, example.com?sort=field)
-
-- limit (**default: 6**, used for **limiting documents** affects pagination object inside res.advancedResults, example.com?limit=5)
-
-- page (**default: 1**, the current page if there are multiple pages, this uses limit in order to calculate and represents the current property inside pagination object of res.advancedResults, ex. example.com?page=2)
-
-- all or q (used for searching trough all fields of provided model for a certain value provided in the url, ex. example.com?all=value or multiple words example.com?all=value1+value2)
-
-- filter (more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](./MoreDocsAndExamples))
+| Operations       | Description                                                                                                                                                                                                                                                                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **select**       | selects single or multiple fields from a document, example.com?select=field or multiple example.com?select=field1,field2                                                                                                                                                                                                                     |
+| **sort**         | Default field: createdAt, example.com?sort=field                                                                                                                                                                                                                                                                                             |
+| **limit**        | **default: 6**, used for **limiting documents** affects pagination object inside res.advancedResults, example.com?limit=5                                                                                                                                                                                                                    |
+| **page**         | **default: 1**, the current page if there are multiple pages, this uses limit in order to calculate and represents the current property inside pagination object of res.advancedResults, ex. example.com?page=2                                                                                                                              |
+| **all** or **q** | used for searching trough all fields of provided model for a certain value provided in the url, ex. example.com?all=value or multiple words example.com?all=value1+value2                                                                                                                                                                    |
+| **filter**       | more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](./MoreDocsAndExamples) |
 
 #### Result: res.advancedResults explained in Details
 
