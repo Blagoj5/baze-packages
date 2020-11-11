@@ -9,6 +9,9 @@
 3. Special operators like ?all and ?q that provide global advanced query/search trough all fields in a mongoose model without worrying about what type is the field(Mongoose String, Mongoose ObjectId) or the query value(number, string, date)
 4. Included Pagination
 
+**Additional examples about this middleware**:
+[HERE](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples)
+
 ## Install
 
 ```
@@ -260,14 +263,14 @@ In this section i will mention most of the options you can pass to the URL that 
 
 Special operations that can be done via url:
 
-| Operations       | Description                                                                                                                                                                                                                                                                                                                                  |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **select**       | selects single or multiple fields from a document, example.com?select=field or multiple example.com?select=field1,field2                                                                                                                                                                                                                     |
-| **sort**         | Default field: createdAt, example.com?sort=field                                                                                                                                                                                                                                                                                             |
-| **limit**        | **default: 6**, used for **limiting documents** affects pagination object inside res.advancedResults, example.com?limit=5                                                                                                                                                                                                                    |
-| **page**         | **default: 1**, the current page if there are multiple pages, this uses limit in order to calculate and represents the current property inside pagination object of res.advancedResults, ex. example.com?page=2                                                                                                                              |
-| **all** or **q** | used for searching trough all fields of provided model for a certain value provided in the url, ex. example.com?all=value or multiple words example.com?all=value1+value2                                                                                                                                                                    |
-| **filter**       | more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](./MoreDocsAndExamples) |
+| Operations       | Description                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **select**       | selects single or multiple fields from a document, example.com?select=field or multiple example.com?select=field1,field2                                                                                                                                                                                                                                                                                       |
+| **sort**         | Default field: createdAt, example.com?sort=field. **Field can be ?sort=name (ASC Order) or ?sort=-name (DSC Order)**                                                                                                                                                                                                                                                                                           |
+| **limit**        | **default: 6**, used for **limiting documents** affects pagination object inside res.advancedResults, example.com?limit=5                                                                                                                                                                                                                                                                                      |
+| **page**         | **default: 1**, the current page if there are multiple pages, this uses limit in order to calculate and represents the current property inside pagination object of res.advancedResults, ex. example.com?page=2                                                                                                                                                                                                |
+| **all** or **q** | used for searching trough all fields of provided model for a certain value provided in the url, ex. example.com?all=value or multiple words example.com?all=value1+value2                                                                                                                                                                                                                                      |
+| **filter**       | more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples) |
 
 #### Result: res.advancedResults explained in Details
 
@@ -328,3 +331,29 @@ I would encourage you to install this middleware and enable the console log opti
 ### Error handling
 
 If this middleware throws error it will automatically call next(new Error) which will then go to your error middleware handler. Check expressjs error handling page where it teaches you how to define error middleware to handle all types of error and return them into the res object back to the client
+
+### Some cheat codes for the ones that made it to the end
+
+Instead of manually adding let's say parametars to url example: localhost?name=Tester1&select=name. You can do that with **stringified object**. **Here's how you do that**:
+
+```
+const query = {
+    all: "Test",
+    select: "name",
+    page: "2"
+}
+```
+
+Now you need to use **additional library like query-string** to stringify object to be transformed into valid url parametars
+
+```
+const queryString = require('query-string');
+
+const url = `http://localhost:5000?${queryString.stringify(query)}`;
+
+await axios.get(url);
+```
+
+The query string transforms my url variable to -> http://localhost:5005?all=Test&select=name&page=2 accordingly
+
+[**CHECK THE ADDITIONAL DOCS FOR MANY MORE EXAMPLES AND EXPLANATION ON HOW TO USE THE ?filter PARAMETAR**](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples)

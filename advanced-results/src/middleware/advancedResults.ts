@@ -29,12 +29,12 @@ interface AdvancedResults {
 }
 
 // Im handling cases for queryes like: ?name[regex]=Bla and NOT ?name[$regex]=Bla, so i can prevent nosql injection. Because im using express-mongo-sanitize and what it does is all cases where there's $ transformers them in something else so no injection can be done
-/*
- ***model*** - the model for which the advanced filtering will be done
- ***populate*** - field(String) or fields(Array) that you want to populate
- ***param*** - if except the query, you want the advancedResults to be done by certain paramatear from url. Expecting: ['trainingProgram', 'trainingProgramId'](the first is the field for which the query with param will be done, and the second is the name of the param in the url ('/reviews/:trainingProgramId/dada). Example: Review.find({[param[0]]: req.params[param[1]]}) is same as Review.find({trainingProgram: trainingProgramId}))
+/**
+ * @description Full description and doc about this middleware: https://www.npmjs.com/package/advanced-results
+ * @param  model - the model for which the advanced filtering will be done
+ * @param  populate - field(String) or fields(Array) that you want to populate
+ * @param  param - if except the query, you want the advancedResults to be done by certain paramatear from url. Expecting: ['user', 'userId'](the first is the FIELD NAME for which the query from the parametar will refrence to, and the second is the PARAMETAR NAME in the url ('/reviews/:trainingProgramId/dada). Example: Review.find({[param[0]]: req.params[param[1]]}) is same as Review.find({user: userId}))
  */
-
 const advancedResults = (
   model: Model<any>,
   populate?: string | string[],
@@ -108,19 +108,24 @@ const advancedResults = (
       // Check for filter (This is a query i get from react-admin, so i need to make it work with my advancedResults middleware)
       let filter: Record<string, any> = {};
       const filterArr = [];
+
       if (req.query.filter) {
         // query.filter is an stringified object so i need to parse it before i do anything
         filter = JSON.parse(req.query.filter as string);
 
         // Check for q query which is the same as all
         if (filter['q']) {
-          // I must handle the all case, i populate the req.query.all with the filter.all value, so in the (if statement) below it fetches and queries by every possible field in the Model
-          req.query.all = req.query.all
-            ? req.query.all + ` ${filter['q']}`
-            : filter['q'];
+          filter.all = filter['q'];
           delete filter['q'];
         }
+        // I must handle the all case, i populate the req.query.all with the filter.all value, so in the (if statement) below it fetches and queries by every possible field in the Model
+        if (filter.all) {
+          req.query.all = req.query.all
+            ? req.query.all + ` ${filter.all}`
+            : filter.all;
 
+          delete filter.all;
+        }
         // I don't want the querying to be exact ex. name: 'David Laid'. I want to be flexible ex. name: 'dav', and to show all names that have dav in them. So i must use regex on all properties inside filter
         // parseObject is making the object to be in valid format for querying in mongodb. Example: {name: 'David', someObject: {att1: 'da'}} -----> {name: 'David', 'someObject.att1': 'da'}
         const parsedFilter = parseObject(filter);
