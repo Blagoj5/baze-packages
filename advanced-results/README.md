@@ -1,12 +1,12 @@
-**Middleware** used for advanced querying Mongoose Documents for a specific Model trough GET request using the queries and parametars prvoided by the url . **It only works with MongoDB (mongoose) and expressjs**. It also provides **pagination**
+**Middleware** used for advanced querying Mongoose Documents for a specific Model through GET request using the queries and parameters provided by the URL . **It only works with MongoDB (mongoose) and expressjs**. Furthermore, it includes **pagination**
 
 ## Why use this middleware?
 
 **Benefits:**
 
 1. Advanced query for specific field in mongoose model
-2. Many available operators and operations that you can use just by passing them in the url
-3. Special operators like ?all and ?q that provide global advanced query/search trough all fields in a mongoose model without worrying about what type is the field(Mongoose String, Mongoose ObjectId) or the query value(number, string, date)
+2. Many available operators and operations that you can use just by passing them in the URL
+3. Special operators like ?all and ?q that provide global advanced query/search through all fields in a mongoose model without worrying about what type is the field(Mongoose String, Mongoose ObjectId) or the query value(number, string, date)
 4. Included Pagination
 
 **Additional examples about this middleware**:
@@ -164,7 +164,7 @@ As a first argument **advancedResults(MODEL)**, accepts a **mongoose** model tha
 }
 ```
 
-Urls also work with some **special fields**: all, q and filter  
+URLs also work with some **special fields**: all, q and filter  
 **Example 1**.
 
 ```
@@ -212,21 +212,21 @@ model.find({ '$or': [ { randomNum: 42 }, { __v: 42 } ] })
 }
 ```
 
-**?filter** is more complicated query parametar and requires more parsing before it's sent to the backend. I intially created this option because of **react-admin** package. You can find more example on how to use this [HERE](./MoreDocsAndExamples)
+**?filter** is a more complicated query parameter and requires more parsing before it's sent to the backend. I initially created this option because of **react-admin** package. You can find more example on how to use this [HERE](./MoreDocsAndExamples)
 
 ### Advance Usage
 
-#### Additional parametars
+#### Additional parameters
 
-advancedResults except model as first parametar it takes 3 more arguments
+advancedResults except model as first parameter it takes 3 more arguments
 
-**advancedResults(Model, populateFieldOrFields: string | string[], parametar: [string, string], consoleLogIt: boolean)**
+**advancedResults(Model, populateFieldOrFields: string | string[], parameter: [string, string], consoleLogIt: boolean)**
 
-1. First parametar is the model that will be used by this middleware on a certain route
+1. First parameter is the model that will be used by this middleware on a certain route
 2. If in the model you have **ObjectId field** that can be populated you can pass that field as the **second argument** in this function and res.advancedResults will **return the matching documents with that populated field**.  
    **Example**. **advancedResults(User, 'blogs')** OR if you have **multiple fields** that you want to populate you do **advancedResults(User, ['blogs', 'books'])**
-3. The third argument is specific argument and is used to handle the case where we have a route that has parametar inside of it: example.com/posts/:userId. So the third argument ALWAYS is array with length of 2. The first element of that array is the **field NAME** and the second is the **parametar NAME**. **Example**.  
-   If lets say model Post has users field inside of it that is of type ObjectId you pass the ['users', 'userId] ---> it will create additional filter in this case if the parametar's userId = 1234567afd (example.com/posts/123456afd), object will be {users: 1234567afd}.  
+3. The third argument is specific argument and is used to handle the case where we have a route that has parameter inside of it: example.com/posts/:userId. So the third argument ALWAYS is array with length of 2. The first element of that array is the **field NAME** and the second is the **parameter NAME**. **Example**.  
+   If lets say model Post has an users field inside of it that is of type ObjectId you pass the ['users', 'userId] ---> it will create additional filter in this case if the parameter's userId = 1234567afd (example.com/posts/123456afd), object will be {users: 1234567afd}.  
    This can be used with additional query example.com/posts/123456afd?all=text&limit=2&page=3  
    **advancedResults(Post, null, ['user', 'userId'])**
 4. The fourth argument is of type boolean and is only used for deciding whenever the middleware should console log what the final results of res.advancedResults will look like and what will be passed to model.find(). Default is: **fasle**  
@@ -234,43 +234,43 @@ advancedResults except model as first parametar it takes 3 more arguments
 
 ## Documentation
 
-In this section i will mention most of the options you can pass to the URL that will work with this middleware
+In this section I will mention most of the options you can pass to the URL that will work with this middleware
 
 ### Options
 
-[**Check MongoDB**](https://docs.mongodb.com/manual/reference/operator/) documentation about querying, operators and options in order to understand more about this middleware. Here's basic explanation for some of the options :
+[**Check MongoDB**](https://docs.mongodb.com/manual/reference/operator/) documentation about querying, operators and options in order to understand more about this middleware. Here's a basic explanation for some of the options :
 
 #### Field Specific Operators
 
-1. Operators that you can pass to the url without **\$** sing:
+1. Operators that you can pass to the URL without **\$** sign:
 
-| Operator    | Description                                                                                                                                                                              |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **in**      | selects the documents where the value of a field equals any value in the specified array , ex. ?field[in]=value1,value2                                                                  |
-| **regex**   | provides regular expression capabilities for pattern matching strings in queries. By default is in-case sensitive but can be changed with the \$options operator, ex. ?field[regex]=sth) |
-| **options** | this only works with regex. By default is case-insensitivite ex. ?field[regex]=val&field[options]=i                                                                                      |
-| **gt**      | example.com?field[gt]=5                                                                                                                                                                  |
-| **gte**     | example.com?field[gte]=5                                                                                                                                                                 |
-| **lt**      | example.com?field[lt]=5                                                                                                                                                                  |
-| **lte**     | example.com?field[lte]=5                                                                                                                                                                 |
-| **eq**      | example.com?field[eq]=5                                                                                                                                                                  |
+| Operator    | Description                                                                                                                                                                            |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **in**      | selects the documents where the value of a field equals any value in the specified array , ex. ?field[in]=value1,value2                                                                |
+| **regex**   | provides regular expression capabilities for pattern matching strings in queries. By default is in-case sensitive but can be changed by the \$options operator, ex. ?field[regex]=sth) |
+| **options** | this only works with regex. By default is case-insensitivite ex. ?field[regex]=val&field[options]=i                                                                                    |
+| **gt**      | example.com?field[gt]=5                                                                                                                                                                |
+| **gte**     | example.com?field[gte]=5                                                                                                                                                               |
+| **lt**      | example.com?field[lt]=5                                                                                                                                                                |
+| **lte**     | example.com?field[lte]=5                                                                                                                                                               |
+| **eq**      | example.com?field[eq]=5                                                                                                                                                                |
 
 <br />
 
-2. Other operators work however you need to pass $ for example if you want to pass operator $ne. You need to do example.com?field[$ne]=value. All operators HERE: https://docs.mongodb.com/manual/reference/operator/
+2. Other operators work however you need to pass $ for example, if you want to pass operator $ne. You need to do example.com?field[$ne]=value. All operators HERE: https://docs.mongodb.com/manual/reference/operator/
 
 #### Query operations
 
-Special operations that can be done via url:
+Special operations that can be done via URL:
 
 | Operations       | Description                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **select**       | selects single or multiple fields from a document, example.com?select=field or multiple example.com?select=field1,field2                                                                                                                                                                                                                                                                                       |
 | **sort**         | Default field: createdAt, example.com?sort=field. **Field can be ?sort=name (ASC Order) or ?sort=-name (DSC Order)**                                                                                                                                                                                                                                                                                           |
 | **limit**        | **default: 6**, used for **limiting documents** affects pagination object inside res.advancedResults, example.com?limit=5                                                                                                                                                                                                                                                                                      |
-| **page**         | **default: 1**, the current page if there are multiple pages, this uses limit in order to calculate and represents the current property inside pagination object of res.advancedResults, ex. example.com?page=2                                                                                                                                                                                                |
-| **all** or **q** | used for searching trough all fields of provided model for a certain value provided in the url, ex. example.com?all=value or multiple words example.com?all=value1+value2                                                                                                                                                                                                                                      |
-| **filter**       | more complex then the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO url then sent to the backend. [Check this additional explanation for usage](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples) |
+| **page**         | **default: 1**, the current page (if there are multiple pages), this goes together with ?limit, and depending on the ?page and ?limit values it calculates and displays the current pagination properties inside res.advancedResults, ex. example.com?page=2                                                                                                                                                   |
+| **all** or **q** | used for searching trough all fields of provided model for a certain value provided in the URL, ex. example.com?all=value or multiple words example.com?all=value1+value2                                                                                                                                                                                                                                      |
+| **filter**       | more complex than the other 2, it requires additional parsing before sending request to backend to work. Short explanation: filter is an object that first needs to be JSON.stringified then using library like query-parser, parsed INTO URL then sent to the backend. [Check this additional explanation for usage](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples) |
 
 #### Result: res.advancedResults explained in Details
 
@@ -314,8 +314,8 @@ res.advancedResults = {
 }
 ```
 
-- **count** - the number of documents return currently in data object. This is not the same as pagination.maxDocuments or pagination.total
-- **pagination** - object depends on the ?page and ?limit. The **next** property gives the next page (if there's one) and the next next Page if it exists. If next.page exists however next.nextPage doesn't it is set to undefined. Example if page = 1; next.page = 2; next.nextPage = 3 | undefiend. Save explanation is with the **prev** property of the pagination object
+- **count** - returns the number of documents currently in the data object. This is not the same as pagination.maxDocuments or pagination.total
+- **pagination** - object depends on the ?page and ?limit. The **next** property gives the next page (if there's one) and the next next Page if it exists. If next.page exists, however next.nextPage doesn't it is set to undefined. Example if page = 1; next.page = 2; next.nextPage = 3 | undefiend. Same explanation is with the **prev** property of the pagination object
 - **pagination.total** - the maximum number of documents with the QUERY
 - **pagination.maxDocuments** - the maximum number of documents without the QUERY. **So this the total number of document from that model**
 - **data** - The result of model.find(), a **list** of all documents that match the specific query criteria. If none it is empty
@@ -330,11 +330,11 @@ I would encourage you to install this middleware and enable the console log opti
 
 ### Error handling
 
-If this middleware throws error it will automatically call next(new Error) which will then go to your error middleware handler. Check expressjs error handling page where it teaches you how to define error middleware to handle all types of error and return them into the res object back to the client
+If this middleware throws an error it will automatically call next(new Error) which will then go to your error middleware handler. Check expressjs error handling page where it teaches you how to define error middleware to handle all types of error and return them into the res object back to the client
 
 ### Some cheat codes for the ones that made it to the end
 
-Instead of manually adding let's say parametars to url example: localhost?name=Tester1&select=name. You can do that with **stringified object**. **Here's how you do that**:
+Instead of manually adding let's say parameters to URL example: localhost?name=Tester1&select=name. You can do that with **stringified object**. **Here's how you do that**:
 
 ```
 const query = {
@@ -344,16 +344,16 @@ const query = {
 }
 ```
 
-Now you need to use **additional library like query-string** to stringify object to be transformed into valid url parametars
+Now you need to use **additional library like query-string** to stringify object to be transformed into valid URL parameters
 
 ```
 const queryString = require('query-string');
 
-const url = `http://localhost:5000?${queryString.stringify(query)}`;
+const URL = `http://localhost:5000?${queryString.stringify(query)}`;
 
-await axios.get(url);
+await axios.get(URL);
 ```
 
-The query string transforms my url variable to -> http://localhost:5005?all=Test&select=name&page=2 accordingly
+The query string transforms my URL variable to -> http://localhost:5005?all=Test&select=name&page=2 accordingly
 
-[**CHECK THE ADDITIONAL DOCS FOR MANY MORE EXAMPLES AND EXPLANATION ON HOW TO USE THE ?filter PARAMETAR**](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples)
+[**CHECK THE ADDITIONAL DOCS FOR MANY MORE EXAMPLES AND EXPLANATION ON HOW TO USE THE ?filter PARAMETeR**](https://github.com/Blagoj5/baze-packages/tree/main/advanced-results/MoreDocsAndExamples)

@@ -26,8 +26,9 @@ class BazeQueryFormatter {
         case 'Array':
           // * This is for the array if it's full with object ids. If it's just normal array i skip it because i get it's attributes in subPaths !!
           if (this.paths[path].$embeddedSchemaType.instance === 'ObjectID') {
-            if (isValidObjectId(value)) {
-              return { [path]: value };
+            const valueWithoutSpace = value.replace(' ', '');
+            if (isValidObjectId(valueWithoutSpace)) {
+              return { [path]: valueWithoutSpace };
             }
           }
           return false;
@@ -54,8 +55,10 @@ class BazeQueryFormatter {
           //   const originalField = path.replace('.$', '');
           //   continue;
           // }
-          if (isValidObjectId(value)) {
-            return { [path]: value };
+          // isValidObjectId returns true for ('test t') for some reason. But when i merge them together into testt it causes no problems
+          const valueWithoutSpace = value.replace(' ', '');
+          if (isValidObjectId(value.replace(valueWithoutSpace))) {
+            return { [path]: valueWithoutSpace };
           }
           return false;
         case 'Number':

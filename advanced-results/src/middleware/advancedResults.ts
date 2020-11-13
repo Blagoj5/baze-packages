@@ -169,6 +169,9 @@ const advancedResults = (
         // If there's something like let's say req.query.all=David Laid Push, everytime the query will be EMPTY because it uses inside of $regex: 'David Laid Push', FOR THAT REASON i need to split the words in ARRAY AND DO QUERY(regex) FOR EVERY WORD that is typed with whitespace
         let words: string[] = [];
         let wordsString = '';
+
+        // In case all parametar is ?all=dsadas%20 ---> all = 'dsadas '. And when i do .split(' ') it makes 2 words the actual word which is dsadas and the empty space ---> ['dsadas', '']; This is bad so i need to trim the ends and beginning of that string
+        req.query.all = (req.query.all as string).trim();
         // In case query is all=Sth+sth
         if (req.query.all) {
           words = words.concat((req.query.all as string).split(' '));
