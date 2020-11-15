@@ -1,6 +1,6 @@
 {
   "name": "advanced-results",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Advanced query middleware for expressjs and mongoose",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,5 +44,8 @@
   "peerDependencies": {
     "express": ">=4",
     "mongoose": "5.x"
+  },
+  "dependencies": {
+    "escape-string-regexp": "^4.0.0"
   }
 }

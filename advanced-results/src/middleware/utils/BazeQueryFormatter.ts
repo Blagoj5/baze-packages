@@ -1,4 +1,6 @@
-import { Model, isValidObjectId, Schema } from 'mongoose';
+import { Model } from 'mongoose';
+import isObjectId from '../../utils/isObjectIdCustom';
+const escapeStringRegexp = require('escape-string-regexp');
 
 class BazeQueryFormatter {
   paths: Record<string, any>;
@@ -26,9 +28,8 @@ class BazeQueryFormatter {
         case 'Array':
           // * This is for the array if it's full with object ids. If it's just normal array i skip it because i get it's attributes in subPaths !!
           if (this.paths[path].$embeddedSchemaType.instance === 'ObjectID') {
-            const valueWithoutSpace = value.replace(' ', '');
-            if (isValidObjectId(valueWithoutSpace)) {
-              return { [path]: valueWithoutSpace };
+            if (isObjectId(value)) {
+              return { [path]: value };
             }
           }
           return false;
@@ -44,9 +45,9 @@ class BazeQueryFormatter {
           return false;
         case 'String':
           if (typeof value === 'string' && !Number.isInteger(+value)) {
-            console.log(Number.isInteger(value));
-            debugger;
-            return { [path]: { $regex: value, $options: 'i' } };
+            return {
+              [path]: { $regex: escapeStringRegexp(value), $options: 'i' },
+            };
           }
           return false;
         case 'ObjectID':
@@ -56,9 +57,8 @@ class BazeQueryFormatter {
           //   continue;
           // }
           // isValidObjectId returns true for ('test t') for some reason. But when i merge them together into testt it causes no problems
-          const valueWithoutSpace = value.replace(' ', '');
-          if (isValidObjectId(value.replace(valueWithoutSpace))) {
-            return { [path]: valueWithoutSpace };
+          if (isObjectId(value)) {
+            return { [path]: value };
           }
           return false;
         case 'Number':
