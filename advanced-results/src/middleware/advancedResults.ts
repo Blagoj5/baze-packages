@@ -171,14 +171,15 @@ const advancedResults = (
         let wordsString = '';
 
         // In case all parametar is ?all=dsadas%20 ---> all = 'dsadas '. And when i do .split(' ') it makes 2 words the actual word which is dsadas and the empty space ---> ['dsadas', '']; This is bad so i need to trim the ends and beginning of that string
-        req.query.all = (req.query.all as string).trim();
         // In case query is all=Sth+sth
         if (req.query.all) {
+          req.query.all = (req.query.all as string).trim();
           words = words.concat((req.query.all as string).split(' '));
           wordsString = wordsString + req.query.all;
         }
         // In case query is q=Sth+sth
         if (req.query.q) {
+          req.query.q = (req.query.q as string).trim();
           words = words.concat((req.query.q as string).split(' '));
           wordsString = wordsString + req.query.q;
         }
