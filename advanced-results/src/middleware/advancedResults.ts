@@ -262,7 +262,7 @@ const advancedResults = (
 
       if (endIndex < total) {
         pagination.next = {
-          nextPage: (page + 2) * limit < total ? page + 2 : undefined,
+          nextPage: (page + 2) * limit <= total ? page + 2 : undefined,
           page: page + 1,
         };
       }
