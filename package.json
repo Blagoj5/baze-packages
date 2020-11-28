@@ -1,0 +1,30 @@
+{
+  "name": "baze-packages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.13",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blagoj5/baze-packages.git"
+  },
+  "author": "Blagoj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blagoj5/baze-packages/issues"
+  },
+  "homepage": "https://github.com/Blagoj5/baze-packages#readme"
+}
