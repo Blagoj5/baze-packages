@@ -1,6 +1,6 @@
 {
   "name": "xss-advanced",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Node.js Connect middleware to sanitize user input coming from POST body, GET queries, and url params. Works with Express",
   "keywords": [
     "expressjs",
