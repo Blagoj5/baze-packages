@@ -9,10 +9,10 @@ Node.js Connect middleware to sanitize user input coming from POST body, GET que
 
 **Content**:
 
-- Install
-- How to use
-- Available options
-- Examples
+- [Install](https://github.com/Blagoj5/baze-packages/tree/main/xss-advanced#user-content-install)
+- [How to use](https://github.com/Blagoj5/baze-packages/tree/main/xss-advanced#user-content-how-to-use)
+- [Available options](https://github.com/Blagoj5/baze-packages/tree/main/xss-advanced#user-content-available-options)
+- [Examples](https://github.com/Blagoj5/baze-packages/tree/main/xss-advanced#user-content-additional-examples)
 
 ## Install
 
