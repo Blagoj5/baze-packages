@@ -40,12 +40,12 @@ app.use(xssAdvanced());
 
 Since this middleware is built on top of [xss](https://www.npmjs.com/package/xss), as a argument it acceps any options available by the xss library.
 
-| Argument    | Default value                                                                                                          | Available value                                                       |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| xssOptions  | { **css**: false, **stripIgnoreTagBody**: ['script'] }                                                                 | [CHECK ALL AVAILABLE OPTIONS HERE](https://www.npmjs.com/package/xss) |
-| Explanation | If you let default value then: anywhere in the body, params, query where there's \<script> tag it will be **REMOVED**. |
-| Examples    | \<script>test\</script>test2 **--->** test2;                                                                           |
-|             | \<a href="test">da\</a> **--->** \<a href>da\</a>                                                                      |
+| Argument    | Default value                                                                                                                                                                       | Available value                                                       |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| xssOptions  | { **css**: false, **stripIgnoreTagBody**: ['script'] }                                                                                                                              | [CHECK ALL AVAILABLE OPTIONS HERE](https://www.npmjs.com/package/xss) |
+| Explanation | For **default options**: anywhere in the body, params or query, if there's \<script> tag it will be **REMOVED**, however if element has css style property it will be **PERSISTED** |
+| Examples    | \<script>test\</script>test2 **--->** test2;                                                                                                                                        |
+|             | \<a href="test">da\</a> **--->** \<a href>da\</a>                                                                                                                                   |
 
 <br />
 
