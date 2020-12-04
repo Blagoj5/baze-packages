@@ -56,7 +56,6 @@ const advancedResults = (
           regex?: string;
           in: string;
         };
-        debugger;
         if (possibleValues.regex) {
           // Make sure it's a string, if it's not a string then it should not  have [regex] field inside of it
           if ((model.schema.paths[qr] as any).instance === 'String') {
@@ -289,7 +288,6 @@ const advancedResults = (
           query = query.populate(populate);
         }
       }
-      debugger;
       const results: Document[] = await query;
 
       ((res as any).advancedResults as AdvancedResults) = {
