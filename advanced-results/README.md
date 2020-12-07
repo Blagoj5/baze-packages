@@ -224,7 +224,13 @@ advancedResults except model as first parameter it takes 3 more arguments
 
 1. First parameter is the model that will be used by this middleware on a certain route
 2. If in the model you have **ObjectId field** that can be populated you can pass that field as the **second argument** in this function and res.advancedResults will **return the matching documents with that populated field**.  
-   **Example**. **advancedResults(User, 'blogs')** OR if you have **multiple fields** that you want to populate you do **advancedResults(User, ['blogs', 'books'])**
+   **Example**. **advancedResults(User, 'blogs')** OR if you have **multiple fields** that you want to populate you do **advancedResults(User, ['blogs', 'books'])**  
+Examples that you can pass as second argument:
+    - advancedResults(User, 'books')
+    - advancedResults(User, ['books', 'blogs'])
+    - advancedResults(User, [
+{ path: 'books', select: 'title content' },
+{ path: 'blogs', select: 'title content' }]) - It will populate books and blogs paths and select specific fields (in this case title and content for both ObjectIds)
 3. The third argument is specific argument and is used to handle the case where we have a route that has parameter inside of it: example.com/posts/:userId. So the third argument ALWAYS is array with length of 2. The first element of that array is the **field NAME** and the second is the **parameter NAME**. **Example**.  
    If lets say model Post has an users field inside of it that is of type ObjectId you pass the ['users', 'userId] ---> it will create additional filter in this case if the parameter's userId = 1234567afd (example.com/posts/123456afd), object will be {users: 1234567afd}.  
    This can be used with additional query example.com/posts/123456afd?all=text&limit=2&page=3  
