@@ -1,0 +1,58 @@
+{
+  "name": "react-show-more-button",
+  "version": "1.0.2",
+  "description": "React component for hiding/showing long content by providing custom height, styling and content as children",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist/",
+    "buildStyle": "sass ./src/*/*.module.scss ./dist/components/ShowMore.module.css",
+    "prepare-build": "npm run clean && NODE_ENV=production babel src --out-dir dist --extensions \".ts,.tsx\" --ignore \"src/**/*.scss\" && npm run buildStyle",
+    "copy": "cp -t dist/ README.md package.json LICENSE",
+    "build": "npm run prepare-build && tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blagoj5/baze-packages.git"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Blagoj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Blagoj5/baze-packages/issues"
+  },
+  "homepage": "https://github.com/Blagoj5/baze-packages#readme",
+  "peerDependencies": {
+    "react": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
+    "@types/node-sass": "^4.11.1",
+    "@types/react": "^17.0.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.1.2",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "dependencies": {}
+}

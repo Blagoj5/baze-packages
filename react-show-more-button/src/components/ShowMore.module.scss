@@ -1,0 +1,48 @@
+$primary-color: #26a8da;
+
+.ShowMore {
+  overflow: hidden;
+  position: relative;
+  background: inherit;
+}
+
+.Shadow {
+  content: '';
+  background: inherit;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0.93;
+}
+
+.ButtonDiv {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.Anchor {
+  height: 1px;
+  position: absolute;
+  top: -35px;
+}
+
+.DefaultButton {
+  background: $primary-color;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  width: 40%;
+  max-width: 250px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background: #1795c7;
+  }
+}
