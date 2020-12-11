@@ -9,13 +9,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
+        use: ['babel-loader', 'ts-loader'],
         exclude: /node_modules/,
-        use: [],
       },
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.ts?$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {
@@ -24,8 +24,14 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options: { outputPath: 'css/', name: '[name].min.css' },
+            // options: { outputPath: 'css/', name: '[name].min.css' },
+            options: { outputPath: 'css/', name: 'ShowMore.min.css' },
           },
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
           'sass-loader',
         ],
       },
@@ -37,5 +43,6 @@ module.exports = {
   output: {
     filename: 'ShowMoreBundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '',
   },
 };

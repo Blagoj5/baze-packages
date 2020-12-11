@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './App.module.scss';
 import ShowMore from './components/ShowMoreDev/ShowMore';
-import ShowMoreModule from 'react-show-more-button/';
+import ShowMoreModule from 'react-show-more-button/dist/module';
 function App() {
   return (
     <div>
-      <h1>Where does it come from?</h1>
-      <div>
-        {/* <ShowMoreModule maxHeight={100} style={{ background: 'white' }}> */}
-        <ShowMoreModule>
+      <ShowMoreModule>
+        <h1>Where does it come from?</h1>
+        <div>
           <p>
             Contrary to popular belief, Lorem Ipsum is not simply random text.
             It has roots in a piece of classical Latin literature from 45 BC,
@@ -72,8 +71,8 @@ function App() {
             accompanied by English versions from the 1914 translation by H.
             Rackham.
           </p>
-        </ShowMoreModule>
-      </div>
+        </div>
+      </ShowMoreModule>
 
       <h1>What is Lorem Ipsum? </h1>
       <p>
@@ -118,24 +117,7 @@ function App() {
         translation by H. Rackham.
       </p>
       <div className={styles.ShowMoreDiv}>
-        <ShowMore
-          // anchor='#test'
-          // defaultAnchor Whenever or not when clicking button to the scroll view to stay default, or always bring it on top of the element/content itself
-          // classNameButtonDiv={styles.Tester} Shouldn't be touched, but can be used to change the position of button, adds it as additional class
-          // classNameButton={styles.Tester} Overwrites button class
-          // className={styles.Tester} Adds additional class to main container
-          // style={{ background: 'green' }} Style that is applied to the main parent div, turns the background green, automatically the color of the div that covers the hidden text is inherited and lowered the opacity
-          // styleButton={{ background: 'green' }} Style that is applied to the button, turns the background of the button green
-          // styleButtonDiv={{ justifyContent: 'left' }} Style that is applied to the button's div, makes the button position left
-          // button={<button>BOOM</button>} Overwrites the default button with new button, you can provide anything you want div, button, etc etc..
-          // anchor='#id' or anchor='.someClass'
-          // backgroundColor='red' Default is white. You need to define this property in order the element to have valid colors
-          // onChange={(show) => console.log(show)} Callback function for when the show state changes
-          // backgroundColor='white'
-          style={{ background: 'lightgreen' }}
-          styleButtonDiv={{ background: 'green', justifyContent: 'left' }}
-          styleButton={{ background: 'red' }}
-        >
+        <ShowMore defaultAnchor className={styles.Tester}>
           <h3>Lightgreen color</h3>
           <p>
             <b>Lightgreen color</b> represents the main container/div. Props:

@@ -3,7 +3,7 @@ import styles from './ShowMore.module.scss';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | string;
-  button?: JSX.Element | JSX.Element[];
+  button?: JSX.Element;
   anchor?: string;
   maxHeight?: number;
   className?: string;
@@ -16,7 +16,7 @@ interface Props {
   backgroundColor?: string;
   onChange?: (showValue: boolean) => void;
 }
-
+// TODO: Future, create showMore component that will concat the whole content. That means that it won't show it (because like this you can see it with inspect element)
 const ShowMore: React.FC<Props> = ({
   maxHeight = 400,
   children,
@@ -72,11 +72,9 @@ const ShowMore: React.FC<Props> = ({
           // If the scroll view port is bellow the element that uses showMore
           if (window.scrollY > divRef.current.offsetTop) {
             //   window.scrollTo(0, divRef.current ? divRef.current?.scrollTop : 0);
-            if (!anchor) {
-              // divRef.current?.scrollIntoView();
-              document.querySelector(`.${styles.Anchor}`)?.scrollIntoView();
-              return;
-            }
+            // divRef.current?.scrollIntoView();
+            document.querySelector(`.${styles.Anchor}`)?.scrollIntoView();
+            return;
           }
         }
       }
@@ -111,9 +109,28 @@ const ShowMore: React.FC<Props> = ({
     </button>
   );
 
+  // debugger;
   // If button provided to prop, add it here
   if (button) {
-    buttonInside = button;
+    // If button is multiple elements
+    // if (Array.isArray(button)) {
+    //   buttonInside = button.map((element, index) => {
+    //     // The first iteration, that's the parent element add showMore here
+    //     if (index === 0) {
+    //       return React.cloneElement(element, {
+    //         ...element.props,
+    //         onClick: showToggleHandler,
+    //       });
+    //     }
+    //     return element;
+    //   });
+    // } else {
+    // if button is single element
+    buttonInside = React.cloneElement(button, {
+      ...button.props,
+      onClick: showToggleHandler,
+    });
+    // }
   }
 
   let content = children;

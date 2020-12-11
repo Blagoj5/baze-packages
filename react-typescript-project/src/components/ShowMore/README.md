@@ -32,10 +32,24 @@ React component that limits content (any element/elements) and adds show more bu
 npm install --save react-show-more-button
 ```
 
+There are two ways that you can use this components:
+
+- Requires for the consumer to have **css modules enabled**:
+
+```
+import { ShowMoreModules as ShowMore } from 'react-show-more-button';
+```
+
+- The standard way, however this uses **inline-style** and if you pass classes (className) as prop, it might not work without the **!important** tag because of [specificality](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity):
+
+```
+import ShowMore from 'react-show-more-button';
+```
+
 Imports and Implementation:
 
 ```
-import ShowMore from 'react-show-more-button/';
+import ShowMore from 'react-show-more-button';
 
  <ShowMore maxHeight={100}>
           <p>
@@ -89,21 +103,21 @@ Components that you can style/edit:
 
 ### React-show-more-button Options / Props
 
-| Property/Prop       | Type                                   | Description                                                                                                                                                                                                                  | Default     |
-| ------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| maxHeight           | number                                 | The max height that you want to limit <br/> your component for                                                                                                                                                               | 400         |
-| children            | JSX.Element or JSX.Element[] or string | The content that you want to limit, pass as children                                                                                                                                                                         |             |
-| button              | JSX.Element                            | Pass custom \<button /> or \<div>, and it will be added instead of the default button                                                                                                                                        | Blue Button |
-| anchor              | string                                 | This field is used for controlling **viewport** and it should be a value for querySelector. Ex. for id -> anchor="#test", for class -> anchor=".test". **Check bellow examples, to see how it behaves**                      |             |
-| className           | string                                 | Adds additional class to the main container                                                                                                                                                                                  |             |
-| classNameButon      | string                                 | Add new class to the default button, **overwrites** old one                                                                                                                                                                  |             |
-| classNameButonDiv   | string                                 | Adds additional class to the button div, can be used for changing the position of button                                                                                                                                     |             |
-| style               | React.CSSProperties                    | Adds inline style to main container                                                                                                                                                                                          |             |
-| styleButton         | React.CSSProperties                    | Adds inline style to button                                                                                                                                                                                                  |             |
-| styleButtonDiv      | React.CSSProperties                    | Adds inline style to button container                                                                                                                                                                                        |             |
-| defaultAnchor       | boolean                                | Anchor, viewport behaviour. If **true** it scrolls just above the content that's being wrapped.                                                                                                                              | false       |
-| **backgroundColor** | string                                 | The background color to the main container, you **must provide** this property in order for the style to properly work. Instead of passing value to this property, you can also use the style prop as {background: 'green'}. | #fff, white |
-| onChange            | (showValue: boolean) => void;          | Callback function that is called on state change                                                                                                                                                                             |             |
+| Property/Prop       | Type                                   | Description                                                                                                                                                                                                                                                                                              | Default     |
+| ------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| maxHeight           | number                                 | The max height that you want to limit <br/> your component for                                                                                                                                                                                                                                           | 400         |
+| children            | JSX.Element or JSX.Element[] or string | The content that you want to limit, pass as children                                                                                                                                                                                                                                                     |             |
+| button              | JSX.Element                            | Pass custom \<button /> or \<div>, and it will be added instead of the default button                                                                                                                                                                                                                    | Blue Button |
+| anchor              | string                                 | This field is used for controlling **viewport** and it should be a value for querySelector. Ex. for id -> anchor="#test", for class -> anchor=".test". **Check bellow examples, to see how it behaves**                                                                                                  |             |
+| **className**       | string                                 | Adds additional class to the main container. **I would not recommend using classes props if you are using the default ShowMore (without css modules)** . However if you still decide to use classes with the **default version** you might need to pass **!important** tag to some of the css properties |             |
+| classNameButon      | string                                 | Add new class to the default button, **overwrites** old one                                                                                                                                                                                                                                              |             |
+| classNameButonDiv   | string                                 | Adds additional class to the button div, can be used for changing the position of button                                                                                                                                                                                                                 |             |
+| style               | React.CSSProperties                    | Adds inline style to main container. **All style props are the secure way for styling this component**                                                                                                                                                                                                   |             |
+| styleButton         | React.CSSProperties                    | Adds inline style to button                                                                                                                                                                                                                                                                              |             |
+| styleButtonDiv      | React.CSSProperties                    | Adds inline style to button container                                                                                                                                                                                                                                                                    |             |
+| defaultAnchor       | boolean                                | Anchor, viewport behaviour. If **true** it scrolls just above the content that's being wrapped                                                                                                                                                                                                           | false       |
+| **backgroundColor** | string                                 | The background color to the main container, you **must provide** this property in order for the style to properly work. Instead of passing value to this property, you can also use the style prop as {background: 'green'}                                                                              | #fff, white |
+| onChange            | (showValue: boolean) => void;          | Callback function that is called on state change                                                                                                                                                                                                                                                         |             |
 
 ### Anchor explanation
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './ShowMore.module.scss';
+// import styles from './ShowMore.module.scss';
+import styles from './styles/styles';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | string;
@@ -72,11 +73,9 @@ const ShowMore: React.FC<Props> = ({
           // If the scroll view port is bellow the element that uses showMore
           if (window.scrollY > divRef.current.offsetTop) {
             //   window.scrollTo(0, divRef.current ? divRef.current?.scrollTop : 0);
-            if (!anchor) {
-              // divRef.current?.scrollIntoView();
-              document.querySelector(`.${styles.Anchor}`)?.scrollIntoView();
-              return;
-            }
+            // divRef.current?.scrollIntoView();
+            document.querySelector('#anchor697948554')?.scrollIntoView();
+            return;
           }
         }
       }
@@ -84,10 +83,12 @@ const ShowMore: React.FC<Props> = ({
   };
 
   const styleDivInside: React.CSSProperties | undefined = {
+    ...styles.ShowMore,
     ...style,
     backgroundColor,
   };
   const styleButtonDivInside: React.CSSProperties | undefined = {
+    ...styles.ButtonDiv,
     ...styleButtonDiv,
   };
   let buttonText = 'Show More';
@@ -103,9 +104,9 @@ const ShowMore: React.FC<Props> = ({
 
   let buttonInside: JSX.Element | JSX.Element[] = (
     <button
-      className={`${classNameButton ? classNameButton : styles.DefaultButton}`}
+      className={`${classNameButton ? classNameButton : ''}`}
       onClick={showToggleHandler}
-      style={styleButton}
+      style={{ ...styles.DefaultButton, ...styleButton }}
     >
       {buttonText}
     </button>
@@ -144,14 +145,14 @@ const ShowMore: React.FC<Props> = ({
   return (
     <div
       ref={divRef}
-      className={`${styles.ShowMore} ${className ? className : ''}`}
-      style={{ maxHeight: height, ...styleDivInside }}
+      className={className ? className : ''}
+      style={{ ...styleDivInside, maxHeight: height }}
     >
-      <div className={styles.Anchor}></div>
+      <div id='anchor697948554' style={styles.Anchor}></div>
       {content}
       <div
-        className={styles.Shadow}
         style={{
+          ...styles.Shadow,
           height: buttonDivRef.current
             ? buttonDivRef.current.offsetHeight
             : 'auto',
@@ -159,11 +160,10 @@ const ShowMore: React.FC<Props> = ({
         }}
       />
       <div
-        className={`${styles.ButtonDiv} ${
-          classNameButtonDiv ? classNameButtonDiv : ''
-        }`}
+        className={`${classNameButtonDiv ? classNameButtonDiv : ''}`}
         ref={buttonDivRef}
         style={{
+          ...styles.ButtonDiv,
           ...styleButtonDivInside,
           opacity: showMore === 'hide' ? '0' : '1',
           zIndex: showMore === 'hide' ? -1 : 'initial',
