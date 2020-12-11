@@ -1,6 +1,6 @@
 {
   "name": "react-show-more-button",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "React component for hiding/showing long content by providing custom height, styling and content as children",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/Blagoj5/baze-packages/issues"
   },
-  "homepage": "https://github.com/Blagoj5/baze-packages#readme",
+  "homepage": "https://github.com/Blagoj5/baze-packages/tree/main/react-show-more-button#readme",
   "peerDependencies": {
     "react": ">=16.0.0"
   },
