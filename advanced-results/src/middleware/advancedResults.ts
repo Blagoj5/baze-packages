@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { parseObject } from '../utils/mongooseObjectParser';
 import asyncHandler from './asyncHandler';
 import chalk from 'chalk';
+import escapeStringRegexp from 'escape-string-regexp';
 
 interface Pagination {
   pages?: number;
@@ -27,6 +28,8 @@ interface AdvancedResults {
   pagination: Pagination;
   data: any[];
 }
+
+interface Query extends Request {}
 
 // Im handling cases for queryes like: ?name[regex]=Bla and NOT ?name[$regex]=Bla, so i can prevent nosql injection. Because im using express-mongo-sanitize and what it does is all cases where there's $ transformers them in something else so no injection can be done
 /**
@@ -54,9 +57,14 @@ const advancedResults = (
       for (let qr in req.query) {
         const possibleValues = req.query[qr] as {
           regex?: string;
-          in: string;
+          in?: string;
+          nin?: string;
         };
         if (possibleValues.regex) {
+          // Make sure first it's valid regex escaped string
+          (req.query[qr] as any).regex = escapeStringRegexp(
+            (req.query[qr] as any).regex
+          );
           // Make sure it's a string, if it's not a string then it should not  have [regex] field inside of it
           if ((model.schema.paths[qr] as any).instance === 'String') {
             // If there are no options provided in the url by default add i
@@ -70,8 +78,12 @@ const advancedResults = (
 
         if (possibleValues.in) {
           // Splitting if there's in query into an array so the query can be done the proper way $in: ['Hypertrophy', 'Strength']
-
           (req.query[qr] as any).in = possibleValues.in.split(',');
+        }
+
+        if (possibleValues.nin) {
+          // Splitting if there's in query into an array so the query can be done the proper way $nin: ['Hypertrophy', 'Strength']
+          (req.query[qr] as any).nin = possibleValues.nin.split(',');
         }
       }
       //   Copy req.query
@@ -86,6 +98,7 @@ const advancedResults = (
         'all',
         'filter',
         'q',
+        'or',
       ];
 
       //   Loop over removeField and delete from reqQuery
@@ -96,8 +109,15 @@ const advancedResults = (
 
       //   Create operators ($gt, $gte ,etc)
       queryString = queryString.replace(
-        /\b(gt|gte|in|lt|lte|eq|regex|options)\b/g,
-        (match) => `$${match}`
+        /\b(gt|gte|in|lt|lte|eq|regex|options|ne|nin)\b/g,
+        (match, contents, index, fullString) => {
+          // This is in order to check if in the quert user has already entered $ne, so i don't do $$ne, and that to throw exception
+          const charBeforeMatch = fullString.charAt(index - 1);
+
+          // If user already specifies $ dont add it
+          if (charBeforeMatch === '$') return match;
+          return `$${match}`;
+        }
       );
 
       // Calling my object of my custom Class for setting up global/advanced/all query
@@ -206,11 +226,36 @@ const advancedResults = (
       // I need to handle filter query field for react-admin
 
       // Merging the global all query (if there's one) and the basic query that i get from url or from the filter object
-      const finalQuery: Record<string, any> = {
+      let finalQuery: Record<string, any> = {
         ...JSON.parse(queryString),
         ...allQuery,
         ...filter,
       };
+
+      // If i have it in the query like this ?or it puts all of the final queries inside $or: [], or if i have defined ?name=sth&athlete=sth&show=true&or=name,athlete, that means apply $or only to the fields mentioned inside the ?or query which in this case are name and athlete fields.
+      // * IF YOU DEFINE or=athlete,name, YOU MUST HAVE the athlete,name properties already defined inside the query otherwise IT WONT WORK
+      if (req.query.or || req.query.or === '') {
+        let newFinalQuery: { $or: Record<string, any>[] } = { $or: [] };
+        if ((req.query.or as string).length > 0) {
+          const fields = (req.query.or as string).split(',');
+          fields.forEach((field) => {
+            newFinalQuery.$or.push({ [field]: finalQuery[field] });
+
+            // Because we are adding the fields into $or, we dont need them anymore in the finalQuery (because after this block i spread the finalQuery, so since i refactored the properties inside $or i don't need the outside of it)
+            delete finalQuery[field];
+          });
+
+          newFinalQuery = { ...finalQuery, ...newFinalQuery };
+        } else {
+          // In a case where you want to put all attributes in the query inside $or property. Then leave ?or query field empty
+          for (let singleQ in finalQuery) {
+            newFinalQuery.$or.push({ [singleQ]: finalQuery[singleQ] });
+          }
+        }
+
+        finalQuery = newFinalQuery;
+      }
+
       if (consoleIt) {
         console.log(
           chalk.green(
@@ -219,10 +264,12 @@ const advancedResults = (
           JSON.stringify(finalQuery)
         );
       }
+
       // Adding also parametar in the final query if there's one, because some of my routes work that way ex. /api/v1/training-programs/:trainingProgramId/days (it fetches all days with that trainingProgramId). Also can be handled with /api/v1/days?trainingProgram=asdasdasd123123asdas (and passed in the filter field above or just like the example in a normal way in url)
       if (param && req.params[param[1]]) {
         finalQuery[param[0]] = req.params[param[1]];
       }
+
       //   Finding resource
       query = model.find(finalQuery);
 

@@ -6,7 +6,11 @@ class BazeQueryFormatter {
   paths: Record<string, any>;
   queryArray: object[];
   constructor(model: Model<any>) {
-    this.paths = { ...model.schema.paths, ...(model.schema as any).subpaths };
+    // this.paths = { ...model.schema.paths, ...(model.schema as any).subpaths };
+    // In case the scema is new or isn't registered yet
+    this.paths = model.schema.paths
+      ? { ...model.schema.paths, ...(model.schema as any).subpaths }
+      : {};
     this.queryArray = [];
   }
 
