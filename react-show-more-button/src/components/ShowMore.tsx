@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import styles from './ShowMore.module.scss';
-import styles from './styles/styles';
+import styles from '../styles/showmore';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | string;
@@ -15,6 +15,8 @@ interface Props {
   styleButtonDiv?: React.CSSProperties | undefined;
   defaultAnchor?: boolean;
   backgroundColor?: string;
+  labelMore?: string;
+  labelLess?: string;
   onChange?: (showValue: boolean) => void;
 }
 // TODO: Future, create showMore component that will concat the whole content. That means that it won't show it (because like this you can see it with inspect element)
@@ -31,6 +33,8 @@ const ShowMore: React.FC<Props> = ({
   anchor,
   defaultAnchor = false,
   backgroundColor = '#fff',
+  labelMore,
+  labelLess,
   onChange,
 }) => {
   const [showMore, setShowMore] = useState<boolean | string>('hide');
@@ -91,12 +95,12 @@ const ShowMore: React.FC<Props> = ({
     ...styles.ButtonDiv,
     ...styleButtonDiv,
   };
-  let buttonText = 'Show More';
+  let buttonText = labelMore;
   let height: string | number = maxHeight;
 
   //   showmore can also be uninitialized/true/false
   if (!showMore && showMore !== 'hide') {
-    buttonText = 'Show Less';
+    buttonText =  labelLess;
     height = 'none';
     styleDivInside.overflow = 'visible';
     styleButtonDivInside.position = 'relative';
