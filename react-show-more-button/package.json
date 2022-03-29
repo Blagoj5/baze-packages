@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cpo-piemonte/baze-packages.git"
+    "url": "git+https://github.com/Blagoj5/baze-packages.git"
   },
   "keywords": [
     "react",
@@ -28,9 +28,9 @@
   "author": "Blagoj",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cpo-piemonte/baze-packages/issues"
+    "url": "https://github.com/Blagoj5/baze-packages/issues"
   },
-  "homepage": "https://github.com/cpo-piemonte/baze-packages/tree/main/react-show-more-button#readme",
+  "homepage": "https://github.com/Blagoj5/baze-packages/tree/main/react-show-more-button#readme",
   "peerDependencies": {
     "react": ">=16.0.0"
   },
