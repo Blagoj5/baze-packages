@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import styles from './ShowMore.module.scss';
-import styles from '../styles/showmore';
+import styles from '../styles/styles';
 
 interface Props {
   children: JSX.Element | JSX.Element[] | string;
@@ -33,8 +33,8 @@ const ShowMore: React.FC<Props> = ({
   anchor,
   defaultAnchor = false,
   backgroundColor = '#fff',
-  labelMore,
-  labelLess,
+  labelMore = 'Show more',
+  labelLess = 'Show less',
   onChange,
 }) => {
   const [showMore, setShowMore] = useState<boolean | string>('hide');
